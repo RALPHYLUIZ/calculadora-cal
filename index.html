@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Pagamento do Curso</title>
+  <style>
+    body {
+      font-weight: bolder;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      background-color: red;
+      color: #fff;
+      padding: 10px;
+    }
+
+    #calculator {
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 20px;
+      width: 300px;
+      text-align: left;
+      margin: 20px auto; /* Centraliza o formulário */
+    }
+
+    label {
+      text-align: left;
+      display: block;
+      margin-top: 10px;
+    }
+
+    input[type="number"] {
+      font-weight: bolder;
+      text-align: center;
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      background-color: red;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      font-size: 25px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button#limpar {
+      background-color: #555;
+      margin-left: 10px; /* Adiciona margem à esquerda para separar os botões */
+    }
+
+    button:hover {
+      background-color: #444;
+    }
+
+    #resultado {
+      font-size: 25px;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>CALCULADORA DE PAGAMENTO DE CURSO</h1>
+  <form id="calculator">
+    <label for="valorCurso">VALOR DO CURSO:</label>
+    <input type="number" id="valorCurso" step="0.01" value="1320.00"><br>
+
+    <label for="cargaHoraria">CARGA HORÁRIA TOTAL DO CURSO:</label>
+    <input type="number" id="cargaHoraria" value="160"><br>
+
+    <label for="aulasDadas">QUANTIDADE DE DIAS DE AULA:</label>
+    <input type="number" id="aulasDadas" value="1"><br>
+
+    <label for="horaAulaDia">QUANTIDADE DE HORAS AULA/DIA:</label>
+    <input type="number" id="horaAulaDia" value="87"><br>
+
+    <label for="valorPagoAluno">VALOR PAGO PELO ALUNO:</label>
+    <input type="number" id="valorPagoAluno" value="165.00"><br>
+
+    <button type="button" id="calcular" onclick="calcularPagamento()">CALCULAR</button>
+    <button type="button" id="limpar" onclick="limparCampos()">LIMPAR</button>
+  </form>
+
+  <p id="resultado"><span></span></p>
+
+  <script>
+    function calcularPagamento() {
+      const valorCurso = parseFloat(document.getElementById("valorCurso").value);
+      const cargaHoraria = parseFloat(document.getElementById("cargaHoraria").value);
+      const aulasDadas = parseFloat(document.getElementById("aulasDadas").value);
+      const horaAulaDia = parseFloat(document.getElementById("horaAulaDia").value);
+      const valorPagoAluno = parseFloat(document.getElementById("valorPagoAluno").value);
+
+      const valorASerPagoPeloCurso = (valorCurso / cargaHoraria) * aulasDadas * horaAulaDia;
+
+      const diferenca = valorPagoAluno - valorASerPagoPeloCurso;
+      const resultadoElement = document.getElementById("resultado").querySelector("span");
+
+      if (diferenca > 0) {
+        resultadoElement.textContent = "ALUNO TEM DIREITO À DEVOLUÇÃO DE: R$" + diferenca.toFixed(2);
+      } else if (diferenca < 0) {
+        resultadoElement.textContent = "ALUNO DEVE PAGAR AO SENAI: R$" + Math.abs(diferenca).toFixed(2);
+      } else {
+        resultadoElement.textContent = "NÃO HÁ PAGAMENTO A SER FEITO."
+      }
+    }
+
+    function limparCampos() {
+      document.getElementById("valorCurso").value = "";
+      document.getElementById("cargaHoraria").value = "";
+      document.getElementById("aulasDadas").value = "";
+      document.getElementById("horaAulaDia").value = "";
+      document.getElementById("valorPagoAluno").value = "";
+      document.getElementById("resultado").querySelector("span").textContent = "";
+    }
+  </script>
+</body>
+</html>
+
